@@ -10,14 +10,14 @@ public class MainProg {
 		System.out.print("Save results in: ");
 		String filename = sc.next();
 		sc.close();
-		Point2D[] arr = new Point2D[100];
+		Point2D[] arr = new Point2D[1500];
 		Random r = new Random();
 
 		for(int i = 0; i < arr.length; i++){
 			arr[i] = new Point2D(r.nextInt(1000), r.nextInt(1000));
 		}
 
-		Comparator<Point2D> C = new xyCompare();
+		Comparator<Point2D> C = new uncontinuousHilbertCompare(0,0,1000,1000);
 		Arrays.sort(arr, C);
 		
 		XMLGraphicBuilder graphic = new XMLGraphicBuilder(1000, 1000);

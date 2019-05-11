@@ -8,6 +8,10 @@ public class Point2D {
 		this.x = x;
 		this.y = y;
 	}
+	
+	public Point2D(Point2D A) {
+		this(A.getX(),A.getY());
+	}
 
 	public int getX() {
 		return x;
@@ -29,13 +33,16 @@ public class Point2D {
 		return Math.sqrt((x*x) + (y*y));
 	}
 
-	public void scale(double l){
-		x = (int) Math.round(l*x);
-		y = (int) Math.round(l*y);
+	public Point2D scale(double l){
+		return new Point2D((int) Math.round(l*x), (int) Math.round(l*y));
 	}
 
 	public Point2D add(Point2D A){
 		return new Point2D(x + A.x, y + A.y);
+	}
+	
+	public Point2D subtract(Point2D A) {
+		return new Point2D(x-A.x, y-A.y);
 	}
 
 	public String toString(){
@@ -50,6 +57,25 @@ public class Point2D {
 		return false;
 
 	}
+	
+	public boolean isLeftOf(Point2D A) {
+		return this.x <= A.x;
+	}
 
+	public boolean isRightOf(Point2D A) {
+		return this.x >= A.x;
+	}
+	
+	public boolean isBelow(Point2D A) {
+		return this.y <= A.y;
+	}
+	
+	public boolean isAbove(Point2D A) {
+		return this.y >= A.y;
+	}
+	
+	public double distanceTo(Point2D A) {
+		return this.subtract(A).abs();
+	}
 
 }
