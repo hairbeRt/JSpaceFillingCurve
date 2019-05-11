@@ -1,7 +1,7 @@
 # JDataTest
 
 This repository is a simple framework for manipulating and plotting 2D data sets.
-The goal is to have a set of points in 2D-space, sort them in some chosen order 
+The goal is to have a set of points in 2D-space, sort them in some chosen order
 and then print the resulting chain of points as a vector graphic.
 
 # Example graphics
@@ -10,7 +10,7 @@ and then print the resulting chain of points as a vector graphic.
 
 [This](https://raw.githubusercontent.com/hairbeRt/JDataTest/master/pictures/abs.svg?sanitize=true) graphic shows a similar procedure where the points are first sorted by their absolute value and then by geometric argument.
 
-[This](https://raw.githubusercontent.com/hairbeRt/JDataTest/master/pictures/hilbert.svg?sanitize=true) Shows the ordering of points in a plane with an uncontinuous space-filling curve. The quadrants are ordered in cyclic order and the points within any quadrants are ordered recursively, where the orientation of the quadrant ordering is left unchanged in the recursive step (unlike in a "real" Hilbert-curve, where the ordering of the quadrant is rotated in the recursive step).
+[This](https://raw.githubusercontent.com/hairbeRt/JDataTest/master/pictures/hilbert.svg?sanitize=true) Shows the ordering of points in a plane with an uncontinuous space-filling curve. The quadrants are ordered in cyclic order and the points within any quadrants are ordered recursively, where the orientation of the quadrant ordering is left unchanged in the recursive step (unlike in a "real" Hilbert-curve, where the ordering of the quadrant is rotated in the recursive step). The ordering of this uncontinuous curve is visualised in third and fourth order [here](https://raw.githubusercontent.com/hairbeRt/JDataTest/master/pictures/uncontinuous_third_order.svg?sanitize=true) and [here](https://raw.githubusercontent.com/hairbeRt/JDataTest/master/pictures/uncontinuous_fourth_order.svg?sanitize=true).
 
 # Future Goals
 
