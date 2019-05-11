@@ -10,12 +10,12 @@ public class MainProg {
 		System.out.print("Save results in: ");
 		String filename = sc.next();
 		sc.close();
-		Point2D[] arr = new Point2D[256];
+		Point2D[] arr = new Point2D[4096];
 		Random r = new Random();
 
-		for(int i = 0; i < 16; i++) {
-			for(int j = 0; j < 16; j++) {
-				arr[16*i + j] = new Point2D(i*1000/16, j*1000/16);
+		for(int i = 0; i < 64; i++) {
+			for(int j = 0; j < 64; j++) {
+				arr[64*i + j] = new Point2D((i+1)*1000/64, (j+1)*1000/64);
 			}
 		}
 		/*for(int i = 0; i < arr.length; i++){
