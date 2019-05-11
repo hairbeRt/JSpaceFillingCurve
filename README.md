@@ -10,6 +10,8 @@ and then print the resulting chain of points as a vector graphic.
 
 [This](https://raw.githubusercontent.com/hairbeRt/JDataTest/master/pictures/abs.svg?sanitize=true) graphic shows a similar procedure where the points are first sorted by their absolute value and then by geometric argument.
 
+[This](https://raw.githubusercontent.com/hairbeRt/JDataTest/master/pictures/hilbert.svg?sanitize=true) Shows the ordering of points in a plane with an uncontinuous space-filling curve. The quadrants are ordered in cyclic order and the points within any quadrants are ordered recursively, where the orientation of the quadrant ordering is left unchanged in the recursive step (unlike in a "real" Hilbert-curve, where the ordering of the quadrant is rotated in the recursive step).
+
 # Future Goals
 
 Implement a data structure that can efficiently perform an approximately-nearest-neighbor-query and visualise the procedures in play.
