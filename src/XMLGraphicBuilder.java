@@ -1,11 +1,52 @@
+import java.util.LinkedList;
+import java.util.Collection;
 
 public class XMLGraphicBuilder {
+	
 	private StringBuffer XMLSource;
+	int width;
+	int height;
+	
+	private LinkedList<XMLGraphicObject> graphicObjects;
+	private LinkedList<Collection<XMLGraphicObject>> graphicObjectCollections;
+	private LinkedList<XMLGraphicObject[]> graphicObjectArrays;
 	
 	
 	public XMLGraphicBuilder(int width, int height){
-		
-		XMLSource = new StringBuffer();
+		this.width = width;
+		this.height = height;
+		this.XMLSource = new StringBuffer();
+		this.graphicObjects = new LinkedList<XMLGraphicObject>();
+		this.graphicObjectCollections = new LinkedList<Collection<XMLGraphicObject>>();
+		this.graphicObjectArrays = new LinkedList<XMLGraphicObject[]>();
+
+	}
+	
+	public boolean addObject(XMLGraphicObject o) {
+		return graphicObjects.add(o);
+	}
+	
+	public boolean removeObject(XMLGraphicObject o) {
+		return graphicObjects.remove(o);
+	}
+	
+	public boolean addCollection(Collection<XMLGraphicObject> s) {
+		return graphicObjectCollections.add(s);
+	}
+	
+	public boolean removeCollection(Collection<XMLGraphicObject> s) {
+		return graphicObjectCollections.remove(s);
+	}
+	
+	public boolean addArray(XMLGraphicObject[] arr){
+		return graphicObjectArrays.add(arr);
+	}
+	
+	public boolean removeArray(XMLGraphicObject[] arr){
+		return graphicObjectArrays.remove(arr);
+	}
+	
+	public String build() {
 		
 		XMLSource.append(
 				"<?xml version=\"1.0\" encoding=\"utf-8\" ?>\n" +
@@ -19,66 +60,22 @@ public class XMLGraphicBuilder {
 				"	<line x1=\"0\" y1=\"0\" x2=\"" + width + "\" y2=\"0\" style=\"fill:none;stroke:black;stroke-width:3\" marker-end=\"url(#arrow)\" />\n" +
 				"	<line x1=\"0\" y1=\"0\" x2=\"0\" y2=\"" + height + "\" style=\"fill:none;stroke:black;stroke-width:3\" marker-end=\"url(#arrow)\" />\n"
 					);
-
-	}
-	
-	public void drawPoint(Point2D A, int thickness) {
-		XMLSource.append(
-				"	<circle cx=\"" + A.getX() + "\" cy=\"" + A.getY() + "\" r=\"" + thickness + "px\" />\n"
-				);
-	}
-	
-	public void drawPoint(Point2D A) {
-		drawPoint(A, 5);
-	}
-	
-	public void drawPoints(Point2D[] arr, int thickness) {
-		for(Point2D A : arr) {
-			drawPoint(A, thickness);
+		
+		for(XMLGraphicObject o : graphicObjects) {
+			XMLSource.append(o.getXMLSource());
 		}
-	}
-	
-	public void drawPoints(Point2D[] arr) {
-		drawPoints(arr, 5);
-	}
-	
-	public void drawLine(Point2D A, Point2D B, String color, int thickness) {
-		XMLSource.append(
-				"	<line x1=\"" + A.getX() + "\" y1=\"" + A.getY() + "\" x2=\"" + B.getX() + "\" y2=\"" + B.getY() + "\" style=\"fill:none;stroke:" + color + ";stroke-width:" + thickness + "\" />\n"
-				);
-	}
-	
-	public void drawLine(Point2D A, Point2D B, String color) {
-		drawLine(A, B, color, 1);
-	}
-	
-	public void drawLine(Point2D A, Point2D B, int thickness) {
-		drawLine(A, B, "black", thickness);
-	}
-	
-	public void drawLine(Point2D A, Point2D B) {
-		drawLine(A, B, "black", 1);
-	}
-	
-	public void drawChain(Point2D[] arr, String color, int thickness) {
-		for(int i = 0; i < arr.length - 1; i++) {
-			drawLine(arr[i], arr[i+1], color, thickness);
+		
+		for(Collection<XMLGraphicObject> s : graphicObjectCollections) {
+			for(XMLGraphicObject o : s) {
+				XMLSource.append(o.getXMLSource());
+			}
 		}
-	}
-	
-	public void drawChain(Point2D[] arr, int thickness) {
-		drawChain(arr, "black", thickness);
-	}
-	
-	public void drawChain(Point2D[] arr, String color) {
-		drawChain(arr, color, 1);
-	}
-	
-	public void drawChain(Point2D[] arr) {
-		drawChain(arr, "black", 1);
-	}
-	
-	public String build() {
+		
+		for(XMLGraphicObject[] arr : graphicObjectArrays) {
+			for(XMLGraphicObject o : arr) {
+				XMLSource.append(o.getXMLSource());
+			}
+		}
 		XMLSource.append("</svg>");
 		return XMLSource.toString();
 	}

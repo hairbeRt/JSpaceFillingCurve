@@ -1,8 +1,27 @@
 import java.lang.Math;
 
-public class Point2D {
+public class Point2D  extends XMLGraphicObject{
 	private int x;
 	private int y;
+	
+	private int thickness = 5;
+	private String color = "black";
+
+	public int getThickness() {
+		return thickness;
+	}
+
+	public void setThickness(int thickness) {
+		this.thickness = thickness;
+	}
+
+	public String getColor() {
+		return color;
+	}
+
+	public void setColor(String color) {
+		this.color = color;
+	}
 
 	public Point2D(int x, int y) {
 		this.x = x;
@@ -76,6 +95,10 @@ public class Point2D {
 	
 	public double distanceTo(Point2D A) {
 		return this.subtract(A).abs();
+	}
+	
+	public String XMLSource() {
+		return "<circle cx=\"" + x + "\" cy=\"" + y + "\" r=\"" + this.thickness + "px\" fill=\"" + this.color +"\" />\n";
 	}
 
 }
