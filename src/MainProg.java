@@ -2,84 +2,101 @@ import java.util.Random;
 import java.util.Comparator;
 import java.util.Arrays;
 import java.util.Scanner;
+import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 
 public class MainProg {
-	public static void main(String[] args) {
+	public static void main(String[] args) throws FileNotFoundException{
 		Scanner sc = new Scanner(System.in);
 		System.out.print("Save results in: ");
-		String filename = sc.next();
+		String dataFileName = sc.next();
+		System.out.print("Save average data in: ");
+		String avgFileName = sc.next();
 		sc.close();
-		Point2D[] arr = new Point2D[100];
+		
+		Point2D[] arr;
+
+		Comparator<Point2D> C = new uncontinuousHilbertCompare(1,1,1024,1024);
+		Point2D queryPoint = new Point2D();
 		Random r = new Random();
 		
-		Point2D queryPoint = new Point2D(r.nextInt(1000), r.nextInt(1000));
-		queryPoint.setColor("blue");
+		PrintWriter outputFile = new PrintWriter(dataFileName);
+		PrintWriter avgFile = new PrintWriter(avgFileName);
 		
-		Point2D approxNearestNeighbor;
-		Point2D actualNearestNeighbor;
-
-		for(int i = 0; i < arr.length; i++){
-			arr[i] = new Point2D(r.nextInt(1000), r.nextInt(1000));
-		}
-
-		Comparator<Point2D> C = new uncontinuousHilbertCompare(0,0,1000,1000);
-		Arrays.sort(arr, C);
+		double approxDistance, actualDistance, errorPercentage;
+		double averageError;
 		
-		XMLGraphicBuilder graphic = new XMLGraphicBuilder(1000, 1000);
-		graphic.addArray(arr);
-		graphic.addArray(Line2D.getChain(arr));
-		
-		int lowerbound = 0, upperbound = arr.length - 1;
-		boolean equal = false;
-		
-		while(upperbound - lowerbound > 1) {
-			if(C.compare(queryPoint, arr[(upperbound+lowerbound)/2]) < 0) {
-				upperbound = (upperbound+lowerbound)/2;
-			} else {
-				lowerbound = (upperbound+lowerbound)/2;
+		for(int p = 5; p <= 20000; p += 10) { //Dataset size
+			averageError = 0;
+			arr = new Point2D[p];
+			
+			for(int i = 0; i < arr.length; i++){
+				arr[i] = new Point2D();
 			}
+			
+			for(int i = 0; i < arr.length; i++){
+				arr[i].setCoordinates(r.nextInt(1023)+1, r.nextInt(1023)+1);
+			}
+			
+			Arrays.sort(arr, C);
+			
+			for(int n = 1; n <= 50; n++) { //Number of experiments
+				queryPoint.setCoordinates(r.nextInt(1023)+1, r.nextInt(1023)+1);
+				//queryPoint.setColor("blue");
+				
+				Point2D approxNearestNeighbor = queryPoint.getBinarySearchNeighbor(C, arr);
+				Point2D actualNearestNeighbor = queryPoint.getNearestNeighbor(arr);
+				actualDistance = queryPoint.distanceTo(actualNearestNeighbor);
+				approxDistance = queryPoint.distanceTo(approxNearestNeighbor);
+				errorPercentage = ((approxDistance/actualDistance) - 1)*100;
+				if(actualDistance == 0) errorPercentage = 0; 
+				
+				outputFile.println(
+									n + " "
+									+ p + " "
+									+ actualDistance + " "
+									+ approxDistance + " "
+									+ errorPercentage);
+				averageError += errorPercentage;
+			}
+			averageError/= 50;
+			avgFile.println(p + " " + averageError);
 		}
-		
-		if(queryPoint.distanceTo(arr[lowerbound]) > queryPoint.distanceTo(arr[upperbound])) {
-			approxNearestNeighbor = arr[upperbound];
-		} else {
-			approxNearestNeighbor = arr[lowerbound];
-		}
-	
-		actualNearestNeighbor = arr[0];
-		for(int i = 0; i < arr.length; i++) {
-			if(queryPoint.distanceTo(arr[i]) < queryPoint.distanceTo(actualNearestNeighbor)) actualNearestNeighbor = arr[i];
-		}
-		
+		outputFile.close();
+		avgFile.close();
+		/*
+		//Draw results
+		XMLGraphicBuilder graphic = new XMLGraphicBuilder(1000, 1000);
 		Line2D approxLine = new Line2D(queryPoint, approxNearestNeighbor);
 		approxLine.setThickness(8);
 		approxLine.setColor("red");
-		
-		
 		Line2D actualLine = new Line2D(queryPoint, actualNearestNeighbor);
 		actualLine.setThickness(8);
 		actualLine.setColor("green");
+		graphic.addArray(arr);//Generated points
+		graphic.addArray(Line2D.getChain(arr));//Ordered Chain of points
 		
+		//Result of nearest neighbor search
 		graphic.addObject(approxLine);
 		graphic.addObject(actualLine);
 		graphic.addObject(queryPoint);
+		*/
 		
-		try {
+		//Draw SVG graphic
+		/*try {
 			PrintWriter outputFile = new PrintWriter(filename);
-
 			outputFile.print(graphic.build());
-
 			outputFile.close();
 		}
 		catch(java.io.FileNotFoundException e) {
 			System.out.println(e);
-		}
-		
+		}*/
+		/*
 		System.out.println("Approximate nearest neighbor: " + approxNearestNeighbor);
 		System.out.println("Distance: " + queryPoint.distanceTo(approxNearestNeighbor));
 		System.out.println("Actual nearest neighbor: " + actualNearestNeighbor);
 		System.out.println("Distance: " + queryPoint.distanceTo(actualNearestNeighbor));
+		*/
 	}
 
 }
