@@ -3,7 +3,7 @@ public class Line2D extends XMLGraphicObject{
 	private Point2D A;
 	private Point2D B;
 	
-	private int thickness = 2;
+	private int thickness = 1;
 	private String color = "black";
 	
 	public int getThickness() {

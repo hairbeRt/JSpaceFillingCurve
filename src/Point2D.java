@@ -60,6 +60,11 @@ public class Point2D  extends XMLGraphicObject{
 		this.x = x;
 		this.y = y;
 	}
+	
+	public void setCoordinates(Point2D A) {
+		this.x = A.getX();
+		this.y = A.getY();
+	}
 
 	public double abs(){
 		return Math.sqrt((x*x) + (y*y));

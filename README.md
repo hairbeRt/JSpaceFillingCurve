@@ -14,6 +14,14 @@ and then print the resulting chain of points as a vector graphic.
 
 [This](https://raw.githubusercontent.com/hairbeRt/JDataTest/master/pictures/64_uncontinuous.svg?sanitize=true) Image shows an interesting or annoying (you decide) side-effect of using whole-number-coordinates for the 2D-geometry. While the ordering of the points in the smallest scale should consist of a Z-like ordering, some rows show an N-ordering. This is due to the fact that the sizes of the quadrants (1000/64) are no longer whole numbers, so will be rounded, which "kicks" points on a small scale out of their intuitive quadrant (one could say that the algorithm still runs correctly, just that the realised decomposition of quadrants only turns one quadrant into four _nearly_ equally-sized quadrants). A possible future solution is to use double-precision arithmetic at least for the quadrant-decomposition.
 
+[This](https://raw.githubusercontent.com/hairbeRt/JDataTest/master/pictures/uncontinuousHilbert.svg?sanitize=true) Image shows how the uncontinuous Z-ordering curve looks in eigth order.
+
+[This](https://raw.githubusercontent.com/hairbeRt/JDataTest/master/pictures/uncontinuousHilbert.svg?sanitize=true) Shows the continuous actual Hilbert Curve in fourth order.
+
+#Statistical evaluation
+
+Coming soon. See [here](https://raw.githubusercontent.com/hairbeRt/JDataTest/master/statistical_data/) for collected data.
+
 # Future Goals
 
 Implement a data structure that can efficiently perform an approximately-nearest-neighbor-query and visualise the procedures in play.

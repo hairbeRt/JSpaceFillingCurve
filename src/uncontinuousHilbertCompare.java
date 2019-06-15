@@ -3,33 +3,42 @@ import java.util.Comparator;
 public class uncontinuousHilbertCompare implements Comparator<Point2D>{
 	private Point2D lowerLeft;
 	private Point2D upperRight;
+	
+	private Point2D currentLowerLeft;
+	private Point2D currentUpperRight;
+	private Point2D relativeOrigin;
+	private int arg0Quad;
+	private int arg1Quad;
 
 	public uncontinuousHilbertCompare(Point2D lowerLeft, Point2D upperRight) {
 		this.lowerLeft = lowerLeft;
 		this.upperRight = upperRight;
+		
+		currentLowerLeft = new Point2D(lowerLeft);
+		currentUpperRight = new Point2D(upperRight);
+		relativeOrigin = new Point2D(0,0);
 	}
 	
 	public uncontinuousHilbertCompare(int lowerLeftX, int lowerLeftY, int upperRightX, int upperRightY) {
 		lowerLeft = new Point2D(lowerLeftX, lowerLeftY);
 		upperRight = new Point2D(upperRightX, upperRightY);
+		
+		currentLowerLeft = new Point2D(lowerLeft);
+		currentUpperRight = new Point2D(upperRight);
+		relativeOrigin = new Point2D(0,0);
 	}
 
 	public int compare(Point2D arg0, Point2D arg1) {
 		if(arg0.equals(arg1)) return 0;
-		Point2D currentLowerLeft = new Point2D(lowerLeft);
-		Point2D currentUpperRight = new Point2D(upperRight);
-		
-		Point2D relativeOrigin = new Point2D(0,0);
-		int arg0Quad, arg1Quad;
+		currentLowerLeft.setCoordinates(lowerLeft);
+		currentUpperRight.setCoordinates(upperRight);
 		
 		while(!currentLowerLeft.equals(currentUpperRight)) {
 			arg0Quad = 0;
 			arg1Quad = 0;
 			
-			relativeOrigin.setX(
-						(currentLowerLeft.getX() + currentUpperRight.getX())/2
-					);
-			relativeOrigin.setY(
+			relativeOrigin.setCoordinates(
+						(currentLowerLeft.getX() + currentUpperRight.getX())/2,
 						(currentLowerLeft.getY() + currentUpperRight.getY())/2
 					);
 			
