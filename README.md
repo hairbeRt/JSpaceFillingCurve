@@ -20,7 +20,7 @@ and then print the resulting chain of points as a vector graphic.
 
 # Statistical evaluation
 
-Coming soon. See [here](https://raw.githubusercontent.com/hairbeRt/JDataTest/master/statistical_data/) for collected data.
+Coming soon. See [here](https://github.com/hairbeRt/JDataTest/tree/master/statistical_data) for collected data.
 
 # Future Goals
 
