@@ -49,10 +49,10 @@ public class continuousHilbertCompare implements Comparator<Point2D>{
 					);
 			
 			if(arg0.isRightOf(relativeOrigin)) arg0Quad+=2;
-			if(arg0.isLeftOf(relativeOrigin) ^ arg0.isBelow(relativeOrigin)) arg0Quad+=1;
+			if((!arg0.isRightOf(relativeOrigin)) ^ arg0.isBelow(relativeOrigin)) arg0Quad+=1;
 			
 			if(arg1.isRightOf(relativeOrigin)) arg1Quad+=2;
-			if(arg1.isLeftOf(relativeOrigin) ^ arg1.isBelow(relativeOrigin)) arg1Quad+=1;
+			if((!arg1.isRightOf(relativeOrigin)) ^ arg1.isBelow(relativeOrigin)) arg1Quad+=1;
 			
 			switch(arg0Quad) {
 			case 0:
@@ -91,7 +91,6 @@ public class continuousHilbertCompare implements Comparator<Point2D>{
 			}
 			
 			if(arg0Quad != arg1Quad) return (arg0Quad<arg1Quad)?-1:1;
-			
 		}
 		return 0;
 		

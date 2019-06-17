@@ -62,8 +62,8 @@ public class Point2D  extends XMLGraphicObject{
 	}
 	
 	public void setCoordinates(Point2D A) {
-		this.x = A.getX();
-		this.y = A.getY();
+		this.x = A.x;
+		this.y = A.y;
 	}
 
 	public double abs(){
