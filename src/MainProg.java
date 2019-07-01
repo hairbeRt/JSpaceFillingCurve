@@ -7,56 +7,49 @@ import java.util.Random;
 
 public class MainProg {
 	public static void main(String[] args) throws FileNotFoundException{
+		System.out.println("Save data in: ");
 		Scanner sc = new Scanner(System.in);
-		System.out.print("Save nearest neighbor probability results in: ");
-		String neighborFileName = sc.next();
-		System.out.print("Save error results in: ");
-		String errorFileName = sc.next();
+		String fileName = sc.next();
 		sc.close();
-		PrintWriter neighborFile = new PrintWriter(neighborFileName);
-		PrintWriter errorFile = new PrintWriter(errorFileName);
-		Point2D[] arr;
-		Point2D queryPoint;
-		Point2D nearestNeighbor;
-		Point2D generatedNeighbor;
 		Random r = new Random();
-		double bestNeighborCount;
-		double errorCount;
-		double avgRelativeError;
+		PrintWriter file = new PrintWriter(fileName);
+		Comparator<Point2D> C = new uncontinuousHilbertCompare(0,0,1024,1024);
+		double amount;
+		Point2D[] arr;
+		Point2D queryPoint = new Point2D(0,0);
+		Point2D nearestNeighbor;
+		Point2D approxNeighbor;
+		double actualDistance;
+		double approxDistance;
+		int intamount;
+		int pointsThatMiss;
+		double errorSum;
 		
-		
-		
-		Comparator<Point2D> C = new continuousHilbertCompare(0,0,512,512);
-		
-		for(int length = 100; length <= 20000; length += 100) {
-			System.out.println(length);
-			bestNeighborCount = 0;
-			errorCount = 0;
-			avgRelativeError = 0;
-			arr = new Point2D[length];
-			for(int i = 0; i < arr.length; i++) {
-				arr[i] = new Point2D(r.nextInt(512), r.nextInt(512));
+		for(amount = 100; amount < 65536; amount *= 1.02){
+			intamount = (int) Math.round(amount);
+			System.out.println(intamount);
+			arr = new Point2D[intamount];
+			for(int i = 0; i < intamount; i++){
+				arr[i] = new Point2D(r.nextInt(1024), r.nextInt(1024));
 			}
 			Arrays.sort(arr, C);
-			
-			for(int i = 0; i < 100; i++) {
-				queryPoint = new Point2D(r.nextInt(512), r.nextInt(512));
+			pointsThatMiss = 0;
+			errorSum = 0;
+			for(int i = 0; i < 1000; i++){
+				queryPoint.setCoordinates(r.nextInt(1024), r.nextInt(1024));
+				approxNeighbor = queryPoint.getBinarySearchNeighbor(C, arr);
 				nearestNeighbor = queryPoint.getNearestNeighbor(arr);
-				generatedNeighbor = queryPoint.getBinarySearchNeighbor(C, arr);
-				if(queryPoint.distanceTo(generatedNeighbor) - queryPoint.distanceTo(nearestNeighbor) > 0.5) {
-					errorCount += 1;
-					avgRelativeError += (queryPoint.distanceTo(generatedNeighbor)/queryPoint.distanceTo(nearestNeighbor)) - 1;
-				} else {
-					bestNeighborCount += 1;
+				actualDistance = queryPoint.distanceTo(nearestNeighbor);
+				approxDistance = queryPoint.distanceTo(approxNeighbor);
+				if(approxDistance > actualDistance + 0.05 && actualDistance > 0.9){
+					pointsThatMiss++;
+					errorSum += (approxDistance - actualDistance)/actualDistance;
 				}
 			}
-			avgRelativeError /= errorCount;
-			neighborFile.println(length + " " + bestNeighborCount/100);
-			errorFile.println(length + " " + avgRelativeError);
+			errorSum /= (double) pointsThatMiss;
+			file.println(Math.log(amount)/Math.log(4) + " " + errorSum);			
 		}
-		neighborFile.close();
-		errorFile.close();
-		
+		file.close();
 	}
 
 }
