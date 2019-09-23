@@ -5,7 +5,7 @@ public class Point2D  extends XMLGraphicObject{
 	private int x;
 	private int y;
 	
-	private int thickness = 5;
+	private int thickness = 3;
 	private String color = "black";
 	
 	public Point2D(int x, int y) {
@@ -76,6 +76,10 @@ public class Point2D  extends XMLGraphicObject{
 
 	public Point2D add(Point2D A){
 		return new Point2D(x + A.x, y + A.y);
+	}
+	
+	public Point2D add(int a, int b) {
+		return new Point2D(x + a, y + b);
 	}
 	
 	public Point2D subtract(Point2D A) {
