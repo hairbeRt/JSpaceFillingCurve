@@ -1,6 +1,6 @@
 # JDataTest
 
-This repository captures the code progress of my project "Neighbor-preserving properties of space-filling curves" in the semester course "Project group: Computational topology" at University of Bonn.
+This repository captures the code progress of my project "Neighbor-preserving properties of space-filling curves" in the semester course "Project group: Computational geometry" at University of Bonn.
 
 # Aim and general idea
 
