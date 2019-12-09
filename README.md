@@ -10,11 +10,9 @@ The problem is fairly easy to solve in Euclidean space in dimension 2, however i
 
 The general idea of our approach is an approximation algorithm:
 
-(Preprocessing)
+
 1. Model a comparison operator that orders points by their first appearance in some previously chosen space-filling curve
 2. Model the dataset as a sorted list P[-]  of points (sorted by this comparison operator)
-
-(Query input: A point x)
 3. Find an n such that inserting x into P at position n results in P still being sorted (i.e. Binary Search on the comparison operator).
 4. Return the closest of the points {P[n-1],P[n]}.
 
