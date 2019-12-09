@@ -13,6 +13,7 @@ The general idea of our approach is an approximation algorithm:
 (Preprocessing)
 1. Model a comparison operator that orders points by their first appearance in some previously chosen space-filling curve
 2. Model the dataset as a sorted list P[-]  of points (sorted by this comparison operator)
+
 (Query input: A point x)
 3. Find an n such that inserting x into P at position n results in P still being sorted (i.e. Binary Search on the comparison operator).
 4. Return the closest of the points {P[n-1],P[n]}.
@@ -48,8 +49,11 @@ Try to answer the following interesting questions:
 3. In practice, how many shifted copies to you need to still approach an average error of 0?
 4. Is it possible to make a non-approximative algorithm out of this?
 5. Is there a curve belonging to the Daun-Tiling that performs better than a Hilbert Curve in dimension 2?
+6. I noticed that recursive space-orderings that work by recursively permuting subsets of the search space are easier to implement if their group of permutations is abelian. Are there Hilbert Curves with abelian quadrant permutation group that behave nicely for this purpose?
 
 # Literature
 [1] Herman Haverkort. [Recursive tilings and space-filling curves with little fragmentation](https://arxiv.org/abs/1002.1843)
+
 [2] Liao et al. (2001) [High Dimensional Similarity Search With Space Filling Curves](https://ieeexplore.ieee.org/document/914876)
+
 [3] Arie Bos, Herman Haverkort. [Hyperorthogonal well-folded Hilbert curves](https://arxiv.org/abs/1508.02517)
